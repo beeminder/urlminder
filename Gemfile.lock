@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/mongoid/mongoid.git
+  revision: e3539830c2c00eea134951eb3cd9eef669ddef99
+  specs:
+    mongoid (4.0.0)
+      activemodel (~> 4.0.0)
+      moped (~> 2.0.beta3)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.37)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -27,6 +37,8 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.0)
     atomic (1.1.14)
+    bcrypt-ruby (3.1.1)
+    bson (2.0.0.rc3)
     builder (3.1.4)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -35,9 +47,18 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    devise (3.0.0.rc)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      warden (~> 1.2.1)
     erubis (2.7.0)
     execjs (2.0.2)
+    faraday (0.8.7)
+      multipart-post (~> 1.1)
+    hashie (1.2.0)
     hike (1.2.3)
+    httpauth (0.2.0)
     i18n (0.6.5)
     jbuilder (1.5.2)
       activesupport (>= 3.0.0)
@@ -46,12 +67,35 @@ GEM
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
+    jwt (0.1.5)
+      multi_json (>= 1.0)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25)
     minitest (4.7.5)
+    moped (2.0.0.beta3)
+      bson (~> 2.0.0.rc3)
+      optionable (~> 0.1.1)
     multi_json (1.8.2)
+    multipart-post (1.2.0)
+    oauth2 (0.8.1)
+      faraday (~> 0.8)
+      httpauth (~> 0.1)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      rack (~> 1.2)
+    omniauth (1.1.1)
+      hashie (~> 1.2)
+      rack
+    omniauth-beeminder (1.0)
+      omniauth-oauth2 (>= 1.1.1)
+    omniauth-oauth2 (1.1.1)
+      oauth2 (~> 0.8.0)
+      omniauth (~> 1.0)
+    optionable (0.1.1)
+    origin (1.1.0)
+    orm_adapter (0.4.0)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -102,14 +146,20 @@ GEM
     uglifier (2.2.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    warden (1.2.3)
+      rack (>= 1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  devise (= 3.0.0.rc)
   jbuilder (~> 1.2)
   jquery-rails
+  mongoid!
+  omniauth
+  omniauth-beeminder
   rails (= 4.0.0)
   sass-rails (~> 4.0.0)
   sdoc
