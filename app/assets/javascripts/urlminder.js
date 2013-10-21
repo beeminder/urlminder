@@ -35,6 +35,10 @@ $(document).ready(function() {
     }
   });
 
+  $(".well#connection a").click(function() {
+    $(this).attr("disabled", "disabled");
+  })
+
   $(".refresh-goal").click(function() {
     $(this).attr("disabled", "disabled");
     var opts = {
