@@ -1,0 +1,6 @@
+.well { text-align: center; }
+.clear { clear: both; }
+button { float: right; }
+input.url { margin: 10px 0px; }
+input#url_0 { margin: 0px 0px 10px; }
+#api, #goals { text-align: left; }

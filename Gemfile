@@ -8,6 +8,9 @@ gem 'devise', '3.0.0.rc'
 gem 'mongoid', github: 'mongoid/mongoid'
 gem 'omniauth'
 gem 'omniauth-beeminder'
+gem 'beeminder'
+
+gem 'httparty'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

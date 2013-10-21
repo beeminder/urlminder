@@ -1,1 +1,81 @@
-This is a
+<div class="container" style="width:35%;">
+  <div class="jumbotron">
+    <div class="container">
+      <p>
+        <strong>URLminder</strong> lets you connect to <strong><a href="https://www.beeminder.com">Beeminder</a></strong> and set up a goal to beemind the number of words you publish at one or more publicly accessible URLs.
+      </p>
+    </div>
+  </div>
+  <% if current_user && current_user.has_token %>
+    <div class="well" id="connection">
+      You are connected to Beeminder as <%= current_user.username %>. Huzzah!
+    </div>
+    <% if current_user.goals.present? %>
+      <div class="well" id="goals">
+        <% current_user.goals.each do |g| %>
+          <%= link_to "#{g.shortname}", "https://www.beeminder.com/#{g.shortname}", :title => "Tracking #{g.urls.join(',')}" %>
+          <span class="refreshed-at">Refreshed <%= g.refreshed ? time_ago_in_words(g.refreshed) + " ago" : "never" %></span>
+          <%= link_to "Refresh", "/#{g.shortname}/refresh", :class => "btn btn-primary refresh-goal" %>
+          <div id="spinner"></div>
+          <div class="clear"></div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="well">
+        You haven't added any goals for URLminder to update
+      </div>
+    <% end %>
+    
+    <div id="new-goal-container" class="well">
+      <h4>Add a new goal</h4>
+      <%= form_for Goal.new, :html => { :role => "form", :class => "form-horizontal" } do |f| %>
+        <div class="form-group">
+          <%= f.label "Words added per week", :for => :goal_rate, :class => "col-lg-5 control-label" %>
+          <div class="col-lg-3">
+            <%= f.text_field :rate, :class => "form-control" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label "Goal title", :for => :title, :class => "col-lg-5 control-label" %>
+          <div class="col-lg-6">
+            <%= f.text_field :title, :class => "form-control" %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= f.label "Goal slug", :for => :goal_slug, :class => "col-lg-5 control-label" %>
+          <div class="col-lg-6">
+            <%= f.text_field :slug, :class => "form-control" %>
+          </div>
+        </div>
+        <div class="form-group urls">
+          <label class="col-lg-5 control-label" for="url_0">URL(s)</label>
+          <div class="col-lg-7">
+            <input class="form-control url" id="url_0" name="goal[url_0]" type="text">
+          </div>
+        </div>
+        <div class="form-group">
+          <a href="#" class="add-url"><span class="glyphicon glyphicon-plus"></span></a>&nbsp;<a href="#" class="add-url">Add URL</a>          
+        </div>
+        
+        <button class="btn btn-primary" id="add-goal">Create Goal</button>
+        <div class="clear"></div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="well" id="connection">
+      <a href="/auth/beeminder" class="btn-primary btn">Connect to Beeminder</a>
+    </div>
+  <% end %>
+  <div class="well" id="api">
+    <h3>API</h3>
+    <p>
+      URLminder will (soon) refresh goals once per 24 hour period, but it might not do so at the time you want it to (like right before midnight in your time zone so that you don't derail). 
+    </p>
+    <p>
+      You can trigger a refresh for any goal by issuing a GET to https://urlminder.herokuapp.com/[your-username]/[goal-slug]/refresh, so point cron at that (gently). 
+    </p>
+    <p>
+      If that whets your appetite, URLminder is <a href="https://github.com/beeminder/urlminder">open source</a>, so tinker away. 
+    </p>
+  </div>
+</div>

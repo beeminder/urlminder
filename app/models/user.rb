@@ -1,5 +1,10 @@
 class User
   include Mongoid::Document
+
+  has_many :services, dependent: :destroy
+  field :username
+  has_many :goals
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -37,4 +42,32 @@ class User
 
   ## Token authenticatable
   # field :authentication_token, :type => String
+
+  def email_required?
+    false
+  end
+
+  def password_required?
+    false
+  end
+
+  def has_token
+    services.where(:provider => "beeminder").first
+  end
+
+  def beeminder_client
+    s = services.where(:provider => "beeminder").first
+    s ? Beeminder::User.new(s.token, :auth_type => :oauth) : nil
+  end
+
+  def apply_omniauth(omniauth)
+    service = services.where(provider: omniauth['provider']).first
+    service ||= services.build
+    service.provider  = omniauth["provider"]
+    service.uid       = omniauth["uid"]
+    service.token     = omniauth["credentials"]["token"]
+    service.uname     = omniauth["info"]["id"]
+
+    self.username ||= omniauth['info']['id']
+  end
 end
