@@ -1,4 +1,5 @@
-== URLminder
+URLminder
+==================
 
 URLminder lets you connect to [Beeminder](https://www.beeminder.com) and set up a goal to beemind the number of words you publish at one or more publicly accessible URLs.
 
