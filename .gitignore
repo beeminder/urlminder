@@ -18,4 +18,3 @@ pickle-email-*.html
 .project
 config/initializers/secret_token.rb
 config/heroku_env.rb
-config/mongoid.yml
