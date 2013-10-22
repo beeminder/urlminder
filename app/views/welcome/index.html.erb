@@ -22,10 +22,36 @@
           <%= link_to "#{g.shortname}", "https://www.beeminder.com/#{g.shortname}", :title => "Tracking #{g.urls.join(',')}" %>
           <span class="refreshed-at">Refreshed <%= g.refreshed ? time_ago_in_words(g.refreshed) + " ago" : "never" %></span>
           <%= link_to "Refresh", "/#{g.shortname}/refresh", :class => "btn btn-primary refresh-goal" %>
+          <%= link_to "Edit", "#", :class => "edit-goal btn btn-primary", 
+            "data-username" => current_user.username,
+            "data-slug" => g.slug,
+            "data-urls" => g.urls.join(",") %>
           <div id="spinner"></div>
           <div class="clear"></div>
         <% end %>
       </div>
+      <div class="modal fade" id="edit-goal-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Edit goal</h4>
+            </div>
+            <div class="modal-body">
+              <%= form_for :edit_goal, :url => "/goals/update", :html => { :role => "form", :class => "form-horizontal" } do |f| %>
+                <div class="form-group">
+                  <p>Change the goal's rate and title on <%= link_to "Beeminder", "#", :id => "edit-on-beeminder" %>
+                  </p>
+                </div>
+                <input type="hidden" name="slug" value="" />
+                <%= render :partial => "url_fields" %>
+                <button class="btn btn-primary" id="add-goal">Update Goal</button>
+                <div class="clear"></div>
+              <% end %>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
     <% else %>
       <div class="well">
         You haven't added any goals for URLminder to update
@@ -53,19 +79,10 @@
             <%= f.text_field :slug, :class => "form-control" %>
           </div>
         </div>
-        <div class="form-group urls">
-          <label class="col-lg-5 control-label" for="url_0">URL(s)</label>
-          <div class="col-lg-7">
-            <input class="form-control url" id="url_0" name="goal[url_0]" type="text">
-          </div>
-        </div>
-        <div class="form-group">
-          <a href="#" class="add-url"><span class="glyphicon glyphicon-plus"></span></a>&nbsp;<a href="#" class="add-url">Add URL</a>          
-        </div>
-        
-        <button class="btn btn-primary" id="add-goal">Create Goal</button>
-        <div class="clear"></div>
+        <%= render :partial => "url_fields" %>
       <% end %>
+      <button class="btn btn-primary" id="add-goal">Create Goal</button>
+      <div class="clear"></div>
     </div>
   <% else %>
     <div class="well" id="connection">

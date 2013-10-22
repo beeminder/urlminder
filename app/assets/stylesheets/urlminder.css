@@ -5,3 +5,4 @@ input.url { margin: 10px 0px; }
 input#url_0 { margin: 0px 0px 10px; }
 #api, #goals { text-align: left; }
 #flash { text-align: center; }
+#edit-goal-modal .modal-body { text-align: center; }

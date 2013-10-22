@@ -3,6 +3,8 @@ PublicUrlIntegration::Application.routes.draw do
   resource :service
   resources :users, :goals
 
+  post "/goals/update" => "goals#update"
+
   get "/:username/:slug/refresh" => "goals#refresh"
 
   get "/auth/:provider/callback" => "services#create"

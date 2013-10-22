@@ -23,11 +23,11 @@ $(document).ready(function() {
   }
 
   $(".add-url").click(function() {
-    var lastURLId = $("#new_goal input.url:last").attr("id")
+    var lastURLId = $(this).parent().parent().find("input.url:last").attr("id")
     var index = lastURLId.slice(lastURLId.length - 1) - 0;
     index += 1;
-    $(".urls").append('<label class="col-lg-5 control-label" for="url_' + index + '"></label>');
-    $(".urls").append('<div class="col-lg-7"><input class="form-control url" id="url_' + index + '" name="goal[url_' + index + ']" type="text"></div>');
+    $(this).parent().parent().find(".urls").append('<label class="col-lg-5 control-label" for="url_' + index + '"></label>');
+    $(this).parent().parent().find(".urls").append('<div class="col-lg-7"><input class="form-control url" id="url_' + index + '" name="goal[url_' + index + ']" type="text"></div>');
     return false;
   });
 
@@ -47,6 +47,21 @@ $(document).ready(function() {
     };
     return !error;
   }
+
+  $(".edit-goal").click(function() {
+    $("#edit-goal-modal").find("#edit-on-beeminder").attr("href", "https://www.beeminder.com/" + $(this).attr("data-username") + "/" + $(this).attr("data-slug"));
+    $("#edit-goal-modal").find("input[name='slug']").val($(this).attr("data-slug"));
+    var urls = $(this).attr("data-urls").split(",");
+    $.each(urls, function(i,e) {
+      if ($("#edit-goal-modal").find("#url_" + i).length == 0) {
+        $("#edit-goal-modal").find(".urls").append('<label class="col-lg-5 control-label" for="url_' + i + '"></label>');
+        $("#edit-goal-modal").find(".urls").append('<div class="col-lg-7"><input class="form-control url" id="url_' + i + '" name="goal[url_' + i + ']" type="text"></div>');
+      }
+      $("#edit-goal-modal").find("#url_" + i).val(e);
+    });
+    $("#edit-goal-modal").modal('show');
+    return false;
+  });
 
   $("form#new_goal").submit(function() {
     if (validateForm()) {

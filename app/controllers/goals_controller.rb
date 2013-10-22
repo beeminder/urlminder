@@ -1,7 +1,7 @@
 class GoalsController < ApplicationController
 
   def create
-    redirect_to root_url and return unless current_user.has_token
+    redirect_to root_url and return unless current_user && current_user.has_token
     goal = Goal.new
     goal.user = current_user
     goal.rate = params[:goal][:rate]
@@ -28,7 +28,14 @@ class GoalsController < ApplicationController
   end
 
   def update
-    
+    redirect_to root_url and return unless current_user && goal = 
+      current_user.goals.where(:slug => params[:goal][:slug]).first
+
+    goal.urls = []
+    params[:goal].select { |k, v| k.match(/^url/) && v.present? }.each { |k, v| goal.urls << v }
+    goal.save
+
+    goal.refresh
   end
 
   def refresh
