@@ -1,15 +1,16 @@
 class GoalsController < ApplicationController
 
   def create
-    redirect_to root_url and return unless bee = current_user.beeminder_client
+    redirect_to root_url and return unless current_user.has_token
     goal = Goal.new
     goal.user = current_user
     goal.rate = params[:goal][:rate]
     goal.slug = params[:goal][:slug]
     goal.title = params[:goal][:title]
     goal.refreshed = Time.now
-    params[:goal].select { |k, v| k.match(/^url/) }.each { |k, v| goal.urls << v }
+    params[:goal].select { |k, v| k.match(/^url/) && v.present? }.each { |k, v| goal.urls << v }
     
+    bee = current_user.beeminder_client
     begin
       bee.create_goal({
         :title => goal.title,
