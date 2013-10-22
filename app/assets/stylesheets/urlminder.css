@@ -6,3 +6,6 @@ input#url_0 { margin: 0px 0px 10px; }
 #api, #goals { text-align: left; }
 #flash { text-align: center; }
 #edit-goal-modal .modal-body { text-align: center; }
+.goal { padding: 10px 0px; }
+.goal .goal-buttons { float: right; }
+.goal .info { float: left; padding: 8px 0px; }

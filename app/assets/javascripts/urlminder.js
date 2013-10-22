@@ -19,7 +19,7 @@ $(document).ready(function() {
       left: 'auto' // Left position relative to parent in px
     };
     var target = document.getElementById('spinner');
-    var spinner = new Spinner(opts).spin(target);
+    var spinner = new Spinner(spinnerOpts).spin(target);
   }
 
   $(".add-url").click(function() {
@@ -67,12 +67,15 @@ $(document).ready(function() {
     if (validateForm()) {
       showSpinner();
       $(this).find("button").attr("disabled", "disabled");
-      $(this).submit();
     }
     else {
       return false;
     }
   });
+
+  $("form#edit-goal").submit(function() {
+    $(this).find("button").attr("disabled", "disabled");
+  })
 
   $(".well#connection a").click(function() {
     $(this).attr("disabled", "disabled");

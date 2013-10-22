@@ -18,16 +18,23 @@
     </div>
     <% if current_user.goals.present? %>
       <div class="well" id="goals">
+        <div id="spinner"></div>
         <% current_user.goals.each do |g| %>
-          <%= link_to "#{g.shortname}", "https://www.beeminder.com/#{g.shortname}", :title => "Tracking #{g.urls.join(',')}" %>
-          <span class="refreshed-at">Refreshed <%= g.refreshed ? time_ago_in_words(g.refreshed) + " ago" : "never" %></span>
-          <%= link_to "Refresh", "/#{g.shortname}/refresh", :class => "btn btn-primary refresh-goal" %>
-          <%= link_to "Edit", "#", :class => "edit-goal btn btn-primary", 
-            "data-username" => current_user.username,
-            "data-slug" => g.slug,
-            "data-urls" => g.urls.join(",") %>
-          <div id="spinner"></div>
-          <div class="clear"></div>
+          <div class="goal">
+            <div class="info">
+              <%= link_to "#{g.shortname}", "https://www.beeminder.com/#{g.shortname}", :title => "Tracking #{g.urls.join(',')}" %>
+              <span class="refreshed-at">Refreshed <%= g.refreshed ? time_ago_in_words(g.refreshed) + " ago" : "never" %></span>
+            </div>
+            <div class="goal-buttons">
+              <%= link_to "Refresh", "/#{g.shortname}/refresh", :class => "btn btn-primary refresh-goal" %>
+              <%= link_to "Edit", "#", :class => "edit-goal btn btn-primary", 
+                "data-username" => current_user.username,
+                "data-slug" => g.slug,
+                "data-urls" => g.urls.join(",") %>
+            </div>
+            <div class="clear"></div>
+          </div>
+          
         <% end %>
       </div>
       <div class="modal fade" id="edit-goal-modal">
@@ -38,7 +45,7 @@
               <h4 class="modal-title">Edit goal</h4>
             </div>
             <div class="modal-body">
-              <%= form_for :edit_goal, :url => "/goals/update", :html => { :role => "form", :class => "form-horizontal" } do |f| %>
+              <%= form_for :edit_goal, :url => "/goals/update", :html => { :role => "form", :class => "form-horizontal", :id => "edit-goal" } do |f| %>
                 <div class="form-group">
                   <p>Change the goal's rate and title on <%= link_to "Beeminder", "#", :id => "edit-on-beeminder" %>
                   </p>
@@ -80,9 +87,9 @@
           </div>
         </div>
         <%= render :partial => "url_fields" %>
+        <button class="btn btn-primary" id="add-goal">Create Goal</button>
+        <div class="clear"></div>
       <% end %>
-      <button class="btn btn-primary" id="add-goal">Create Goal</button>
-      <div class="clear"></div>
     </div>
   <% else %>
     <div class="well" id="connection">

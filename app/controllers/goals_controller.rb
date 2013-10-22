@@ -29,13 +29,14 @@ class GoalsController < ApplicationController
 
   def update
     redirect_to root_url and return unless current_user && goal = 
-      current_user.goals.where(:slug => params[:goal][:slug]).first
+      current_user.goals.where(:slug => params[:slug]).first
 
     goal.urls = []
     params[:goal].select { |k, v| k.match(/^url/) && v.present? }.each { |k, v| goal.urls << v }
     goal.save
 
     goal.refresh
+    redirect_to root_url, :flash => { :notice => "URLs updated" }
   end
 
   def refresh
@@ -44,7 +45,7 @@ class GoalsController < ApplicationController
     goal = user.goals.where(:slug => params[:slug]).first
     return unless goal
     goal.refresh
-    redirect_to root_url
+    redirect_to root_url, :flash => { :notice => "Word count updated and sent to Beeminder" }
   end
 
 end
