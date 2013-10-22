@@ -6,6 +6,12 @@
       </p>
     </div>
   </div>
+  <% if flash[:notice] %>
+    <div id="flash" class="alert alert-info"><%= flash[:notice] %></div>
+  <% end %>
+  <% if flash[:error] %>
+    <div id="flash" class="alert alert-danger"><%= flash[:notice] %></div>
+  <% end %>
   <% if current_user && current_user.has_token %>
     <div class="well" id="connection">
       You are connected to Beeminder as <%= current_user.username %>. Huzzah!
