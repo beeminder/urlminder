@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-PublicUrlIntegration::Application.config.secret_key_base = ENV['SECRET_TOKEN']
+PublicUrlIntegration::Application.config.secret_key_base = ENV['SECRET_TOKEN'] || '964cc2163a66387283c389e0fb852ceaa27617a68b5db39e8125b378f64946b2062e5d3439914d0662ac243fa758ececa7026596336888771f8195dab6f26b69'
