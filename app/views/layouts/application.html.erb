@@ -12,7 +12,23 @@
 </head>
 <body>
 
-<%= yield %>
+<div class="container" style="width:35%;">
+  <div class="jumbotron">
+    <div class="container">
+      <p>
+      Hi! If you are looking to beemind your wordcount, you'll want to visit
+      <strong>
+      <%= link_to "the new Official URLminder", "https://www.beeminder.com/urlminder" %>
+      </strong>
+      to set up your goal.
+      </p>
+      <p>
+      If you are looking for the old sample Rails app, for an example of an oAuth client that connects to Beeminder's API, you can find the code for that
+      <%= link_to "in Github", "https://github.com/beeminder/urlminder" %>.
+      </p>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
